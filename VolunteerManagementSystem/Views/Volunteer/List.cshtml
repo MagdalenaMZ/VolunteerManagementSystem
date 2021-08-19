@@ -1,10 +1,10 @@
-﻿@model IEnumerable<Volunteer>
-@foreach (var p in Model)
+﻿@model VolunteersListViewModel
+@foreach (var p in Model.Volunteers)
 {
-    <div>
-        <h3>@p.FirstName</h3>
-        <h4>@p.LastName</h4>
-        <h4>@p.Address</h4>
-        <h4>@p.Availability.</h4>
-    </div>
+
+    <partial name="VolunteerSummary" model="p" />
 }
+<div page-model="@Model.PagingInfo" page-action="List" page-classes-enabled="true"
+     page-class="btn" page-class-normal="btn-default"
+     page-class-selected="btn-primary" page-url-category="@Model.CurrentCategory" class="btn-group float-right">
+</div>

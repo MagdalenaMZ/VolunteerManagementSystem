@@ -1,0 +1,18 @@
+﻿@model IEnumerable<string>
+<a class="btn btn btn-outline-dark btn-block m-2"
+   asp-action="List"
+   asp-controller="Volunteer"
+   asp-route-category="">
+    Home
+</a>
+@foreach (string ApprovalStatus in Model)
+    {
+    <a class="btn btn-block m-2
+@(ApprovalStatus == ViewBag.SelectedApprovalStatus ? "btn-primary": "btn-outline-dark")"
+       asp-action="List"
+       asp-controller="Volunteer"
+       asp-route-category="@ApprovalStatus"
+       asp-route-page="1">
+        @ApprovalStatus
+    </a>
+}

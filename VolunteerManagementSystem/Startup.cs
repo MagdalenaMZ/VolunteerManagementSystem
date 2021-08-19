@@ -39,8 +39,26 @@ namespace VolunteerManagementSystem
             app.UseStaticFiles();
             app.UseMvc(routes => {
                 routes.MapRoute(
-                name: "default",
-                template: "{controller=Volunteer}/{action=List}/{id?}");
+                    name: null,
+                    template: "{ApprovalStatus}/Page{page:int}",
+                    defaults: new { controller = "Volunteer", action = "List" }
+                    );
+                routes.MapRoute(
+                    name: null,
+                    template: "Page{page:int}",
+                    defaults: new { controller = "Volunteer", action = "List", page = 1 }
+                );
+                routes.MapRoute(
+                    name: null,
+                    template: "{ApprovalStatus}",
+                    defaults: new { controller = "Volunteer", action = "List", page = 1 }
+                );
+                routes.MapRoute(
+                    name: null,
+                    template: "",
+                    defaults: new { controller = "Volunteer", action = "List", page = 1 });
+
+                routes.MapRoute(name: null, template: "{controller}/{action}/{id?}");
             });
         }
     }
