@@ -1,0 +1,10 @@
+﻿@model IEnumerable<Volunteer>
+@foreach (var p in Model)
+{
+    <div>
+        <h3>@p.FirstName</h3>
+        <h4>@p.LastName</h4>
+        <h4>@p.Address</h4>
+        <h4>@p.Availability.</h4>
+    </div>
+}
