@@ -2,11 +2,42 @@
 
     <div class="card m-3 rounded">
         <div class="card-block m-2">
-            <strong>@Model.FirstName</strong>
-            <span class="float-right bg-success text-white rounded m-2 p-1">
-                @Model.LastName
-            </span>
-            <h4>@Model.Address</h4>
-            <h4>@Model.Availability</h4>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>
+                            @Model.FirstName, @Model.LastName
+                        </h3>
+                        <ul>
+                            <li class="list-item">
+                                Skills/Interests: @Model.Skills_Interests
+                            </li>
+                            <li class="list-item">
+                                Availability: @Model.Availability
+                            </li>
+                            <li class="list-item">
+                                Centers preferences: @Model.CentersPreferences
+                            </li>
+                            <li class="list-item">
+                                Current Licenses: @Model.CurrentLicenses
+                            </li>
+                            <li class="list-item">
+                                Address: @Model.Address
+                            </li>
+                            <li class="list-item">
+                                Approval Status: @Model.Category
+                            </li>
+                            <li class="list-item">
+                                Educational Background: @Model.EducationalBackground
+                            </li>
+                            <li class="list-item">
+                                Email: @Model.Email
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+  

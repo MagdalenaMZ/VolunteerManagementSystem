@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using VolunteerManagementSystem.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace VolunteerManagementSystem
 {
@@ -28,8 +29,13 @@ namespace VolunteerManagementSystem
         {
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<IVolunteerRepository, EFVolunteerRepository>();
-
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddIdentity<AppUser, IdentityRole<Guid>>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
             services.AddMvc(options => options.EnableEndpointRouting = false);
+            services.AddMemoryCache();
+            services.AddSession();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
@@ -37,26 +43,28 @@ namespace VolunteerManagementSystem
             app.UseDeveloperExceptionPage();
             app.UseStatusCodePages();
             app.UseStaticFiles();
+            app.UseAuthentication();
+            app.UseSession();
             app.UseMvc(routes => {
                 routes.MapRoute(
                     name: null,
                     template: "{ApprovalStatus}/Page{page:int}",
-                    defaults: new { controller = "Volunteer", action = "List" }
+                    defaults: new { controller = "Account", action = "Login" }
                     );
                 routes.MapRoute(
                     name: null,
                     template: "Page{page:int}",
-                    defaults: new { controller = "Volunteer", action = "List", page = 1 }
+                    defaults: new { controller = "Account", action = "Login", page = 1 }
                 );
                 routes.MapRoute(
                     name: null,
                     template: "{ApprovalStatus}",
-                    defaults: new { controller = "Volunteer", action = "List", page = 1 }
+                    defaults: new { controller = "Account", action = "Login", page = 1 }
                 );
                 routes.MapRoute(
                     name: null,
                     template: "",
-                    defaults: new { controller = "Volunteer", action = "List", page = 1 });
+                    defaults: new { controller = "Account", action = "Login", page = 1 });
 
                 routes.MapRoute(name: null, template: "{controller}/{action}/{id?}");
             });

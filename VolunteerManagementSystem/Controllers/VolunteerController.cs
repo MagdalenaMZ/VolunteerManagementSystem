@@ -16,11 +16,11 @@ namespace VolunteerManagementSystem.Controllers
         {
             repository = repo;
         }
-        public ViewResult List(string ApprovalStatus, int page = 1)
+        public ViewResult List(string category, int page = 1)
             => View(new VolunteersListViewModel
             {
                 Volunteers = repository.Volunteers
-                .Where(p => ApprovalStatus == null || p.ApprovalStatus == ApprovalStatus)
+                .Where(p => category == null || p.Category == category)
                 .OrderBy(p => p.VolunteerID)
                 .Skip((page - 1) * PageSize)
                 .Take(PageSize),
@@ -28,12 +28,12 @@ namespace VolunteerManagementSystem.Controllers
                 {
                     CurrentPage = page,
                     ItemsPerPage = PageSize,
-                    TotalItems = ApprovalStatus == null ?
+                    TotalItems = category == null ?
                     repository.Volunteers.Count() :
                     repository.Volunteers.Where(e =>
-                    e.ApprovalStatus == ApprovalStatus).Count()
+                    e.Category == category).Count()
                 },
-                CurrentCategory = ApprovalStatus
+                CurrentCategory = category
             });
     }
 }
